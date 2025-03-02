@@ -6,18 +6,23 @@ export const headerStyles = StyleSheet.create({
         flexDirection: 'row', // Alinha os elementos horizontalmente
     justifyContent: 'space-between', // Espaça os elementos entre si
     alignItems: 'center', // Centraliza verticalmente
-    backgroundColor: '#0F2A2E', // Cor de fundo
+    backgroundColor: '#0D1B2A', // Cor de fundo
     paddingVertical: 10, 
     paddingHorizontal: 15, 
+    
     },
     logo: {
-        width: 100, 
-        height: 40, 
-        resizeMode: 'contain', // Redimensiona mantendo a proporção
+        width: 150, 
+        height: 130, 
+        paddingVertical: 25, 
+        paddingHorizontal: 25,
+        marginLeft: 15,
+        marginTop: -15,
       },
       notificationBell: {
         width: 24, 
         height: 24, 
+        marginRight: 35,
       },
 
 })

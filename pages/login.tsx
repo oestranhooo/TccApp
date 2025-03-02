@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Text,TextInput,View,TouchableOpacity,Image } from "react-native";
 import { loginStyles } from "../styles/stylesLogin";
+import { useNavigation } from "@react-navigation/native";
 
-// Arrumar a hora q escrever no input a letra trocar de cor para branco sla 
+
 export default function Login (){
-    const [text,setText] = useState("")
+  const navigation = useNavigation<any>();
   return(
     <View style = {loginStyles.container}>
         
@@ -12,10 +13,10 @@ export default function Login (){
         
 
         <View style = {loginStyles.boxMid}>
-          <TextInput placeholder="Usuario" placeholderTextColor="#7a7a7a" style = {loginStyles.textInput} onChangeText={setText} value = {text} ></TextInput>
+          <TextInput placeholder="Usuario" placeholderTextColor="#7a7a7a" style = {loginStyles.textInput} ></TextInput>
           <TextInput placeholder="Senha"placeholderTextColor="#7a7a7a" style = {loginStyles.textInput}></TextInput>
 
-          <TouchableOpacity style = {loginStyles.button}>
+          <TouchableOpacity style = {loginStyles.button}   onPress={() => navigation.navigate('Router')}>
             <Text style = {loginStyles.buttonText}>Confirmar</Text>
           </TouchableOpacity>
         </View>
