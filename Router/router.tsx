@@ -6,6 +6,8 @@ import { styleBottonTab } from '../styles/styleBottonTab';
 import { Ionicons } from '@expo/vector-icons';
 import Robo from '../pages/robo';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import SettingsScreen from '../pages/Config';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function Router(){
     const Tab = createBottomTabNavigator();
@@ -62,6 +64,30 @@ export default function Router(){
                     ),
                 }}
             />
+            <Tab.Screen
+                name='ConfigPage'
+                component={SettingsScreen}
+                options={{ 
+                    headerTitle: '',
+                    headerStyle: headerStyles.header,
+                    headerLeft: () => (
+                        <Image 
+                            source={require('../assets/logoHeader.png')} 
+                            style={headerStyles.logo} 
+                        />
+                    ),
+                    headerRight: () => (
+                        <TouchableOpacity style={headerStyles.notificationBell}>
+                            <Ionicons name="notifications" size={24} color={'#00FF99'} />
+                        </TouchableOpacity>
+                    ),
+                    tabBarIcon: () => (
+                        <FontAwesome name="gear" size={24} color="#00FF99" />
+                    ),
+                    
+                }}
+                />
+                
         </Tab.Navigator>
     )
 }

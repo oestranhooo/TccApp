@@ -1,5 +1,5 @@
 import Login from './pages/login';
-import Router from '../apptest/Router/router';
+import Router from './Router/router';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
