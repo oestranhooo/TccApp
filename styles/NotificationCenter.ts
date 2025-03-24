@@ -3,9 +3,14 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
     padding: 20,
     paddingTop: 50,
+  },
+  darkContainer: {
+    backgroundColor: "#121212",
+  },
+  lightContainer: {
+    backgroundColor: "#F5F5F5",
   },
   header: {
     flexDirection: "row",
@@ -14,32 +19,62 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
-    color: "white",
+  },
+  darkText: {
+    color: "#00FF99",
+  },
+  lightText: {
+    color: "#2e7d32",
   },
   notificationsList: {
     flex: 1,
   },
   notificationItem: {
-    backgroundColor: "#1E1E1E",
     padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+    borderRadius: 12,
+    marginBottom: 12,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  darkNotificationItem: {
+    backgroundColor: "#1E1E1E",
+  },
+  lightNotificationItem: {
+    backgroundColor: "#FFFFFF",
   },
   notificationText: {
-    color: "white",
     fontSize: 16,
+    lineHeight: 22,
     marginBottom: 10,
   },
   button: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 12,
+    borderRadius: 8,
+    justifyContent: "center",
+  },
+  darkButton: {
     backgroundColor: "#00FF99",
-    padding: 8,
-    borderRadius: 5,
-    alignSelf: "flex-start",
+  },
+  lightButton: {
+    backgroundColor: "#2e7d32",
   },
   buttonText: {
-    color: "#000",
+    color: "#2e7d32",
+    fontSize: 16,
     fontWeight: "bold",
+    marginLeft: 5,
+  },
+  emptyText: {
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 50,
+    opacity: 0.7,
   },
 });

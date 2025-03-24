@@ -1,54 +1,48 @@
 import React, { useState } from "react";
 import { View, Text, Switch, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import styles from "../styles/styleConfig";
 
-const menuOptions = [
-  { title: "Dados Pessoais", icon: "person" },
-  { title: "Reportar Erro", icon: "bug-report" },
-  { title: "Central de Notificação", icon: "notifications" },
-  { title: "Política de Privacidade", icon: "policy" },
-  { title: "Suporte", icon: "support-agent" },
-  { title: "Sair", icon: "logout" },
+// Definição das rotas disponíveis
+type SettingsStackParamList = {
+  SettingsHome: undefined;
+  PersonalData: undefined;
+  ReportError: undefined;
+  NotificationCenter: undefined;
+  PrivacyPolicy: undefined;
+  Support: undefined;
+  Logout: undefined;
+};
+
+const menuOptions: { title: string; icon: any; route?: keyof SettingsStackParamList }[] = [
+  { title: "Dados Pessoais", icon: "person", route: "PersonalData" },
+  { title: "Reportar Erro", icon: "bug-report", route: "ReportError" },
+  { title: "Central de Notificação", icon: "notifications", route: "NotificationCenter" },
+  { title: "Política de Privacidade", icon: "policy", route: "PrivacyPolicy" },
+  { title: "Suporte", icon: "support-agent", route: "Support" },
+  { title: "Sair", icon: "logout", route: "Logout" },
 ];
 
 const SettingsScreen = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigation = useNavigation<StackNavigationProp<SettingsStackParamList, "SettingsHome">>();
 
   const toggleDarkMode = () => setIsDarkMode((prevMode) => !prevMode);
 
   return (
-    <View style={[
-      styles.container,
-      isDarkMode ? styles.darkContainer : styles.lightContainer
-    ]}>
-      
+    <View style={[styles.container, isDarkMode ? styles.darkContainer : styles.lightContainer]}>
       {/* Cabeçalho */}
       <View style={styles.header}>
-        <Text style={[
-          styles.title,
-          isDarkMode ? styles.darkText : styles.lightText
-        ]}>
+        <Text style={[styles.title, isDarkMode ? styles.darkText : styles.lightText]}>
           Configurações
         </Text>
-        <TouchableOpacity style={styles.menuButton}>
-          <MaterialIcons 
-            name="menu" 
-            size={30} 
-            color={isDarkMode ? "#00FF99" : "#2e7d32"} 
-          />
-        </TouchableOpacity>
       </View>
 
       {/* Modo Escuro */}
-      <View style={[
-        styles.option,
-        isDarkMode ? styles.darkOption : styles.lightOption
-      ]}>
-        <Text style={[
-          styles.optionText,
-          isDarkMode ? styles.darkText : styles.lightOptionText
-        ]}>
+      <View style={[styles.option, isDarkMode ? styles.darkOption : styles.lightOption]}>
+        <Text style={[styles.optionText, isDarkMode ? styles.darkText : styles.lightOptionText]}>
           {isDarkMode ? "Tema Claro" : "Tema Escuro"}
         </Text>
         <Switch
@@ -61,23 +55,18 @@ const SettingsScreen = () => {
 
       {/* Lista de opções */}
       <View style={styles.menuContainer}>
-        {menuOptions.map(({ title, icon }, index) => (
+        {menuOptions.map(({ title, icon, route }, index) => (
           <TouchableOpacity 
             key={index} 
-            style={[
-              styles.option,
-              isDarkMode ? styles.darkOption : styles.lightOption
-            ]}
+            style={[styles.option, isDarkMode ? styles.darkOption : styles.lightOption]}
+            onPress={() => route && navigation.navigate(route)} 
           >
             <MaterialIcons 
-              name={icon as any} 
+              name={icon} 
               size={24} 
               color={isDarkMode ? "#00FF99" : "#2e7d32"} 
             />
-            <Text style={[
-              styles.optionText,
-              isDarkMode ? styles.darkText : styles.lightOptionText
-            ]}>
+            <Text style={[styles.optionText, isDarkMode ? styles.darkText : styles.lightOptionText]}>
               {title}
             </Text>
           </TouchableOpacity>
