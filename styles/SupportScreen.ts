@@ -5,12 +5,7 @@ export default StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: 50,
-  },
-  darkContainer: {
-    backgroundColor: "#000",
-  },
-  lightContainer: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#0D1B2A", // Cor de fundo
   },
   header: {
     flexDirection: "row",
@@ -21,16 +16,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  darkText: {
-    color: "#00FF99",
-  },
-  lightText: {
-    color: "#333",
-  },
-  menuButton: {
-    padding: 10,
+    color: "#00FF99", // Cor do título
   },
   supportContainer: {
     alignItems: "center",
@@ -40,9 +26,10 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    color: "#FFF", // Cor do texto
   },
   whatsappButton: {
-    backgroundColor: "#25D366",
+    backgroundColor: "#25D366", // Cor do WhatsApp
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
@@ -50,7 +37,7 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   emailButton: {
-    backgroundColor: "#D44638",
+    backgroundColor: "#D44638", // Cor do email
     padding: 15,
     borderRadius: 10,
     width: "80%",

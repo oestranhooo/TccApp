@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, Switch, TouchableOpacity } from "react-native";
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -26,31 +26,13 @@ const menuOptions: { title: string; icon: any; route?: keyof SettingsStackParamL
 ];
 
 const SettingsScreen = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const navigation = useNavigation<StackNavigationProp<SettingsStackParamList, "SettingsHome">>();
 
-  const toggleDarkMode = () => setIsDarkMode((prevMode) => !prevMode);
-
   return (
-    <View style={[styles.container, isDarkMode ? styles.darkContainer : styles.lightContainer]}>
+    <View style={styles.container}>
       {/* Cabeçalho */}
       <View style={styles.header}>
-        <Text style={[styles.title, isDarkMode ? styles.darkText : styles.lightText]}>
-          Configurações
-        </Text>
-      </View>
-
-      {/* Modo Escuro */}
-      <View style={[styles.option, isDarkMode ? styles.darkOption : styles.lightOption]}>
-        <Text style={[styles.optionText, isDarkMode ? styles.darkText : styles.lightOptionText]}>
-          {isDarkMode ? "Tema Claro" : "Tema Escuro"}
-        </Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#4CAF50" }}
-          thumbColor={isDarkMode ? "#00FF99" : "#f4f3f4"}
-          onValueChange={toggleDarkMode}
-          value={isDarkMode}
-        />
+        <Text style={styles.title}>Configurações</Text>
       </View>
 
       {/* Lista de opções */}
@@ -58,21 +40,18 @@ const SettingsScreen = () => {
         {menuOptions.map(({ title, icon, route }, index) => (
           <TouchableOpacity 
             key={index} 
-            style={[styles.option, isDarkMode ? styles.darkOption : styles.lightOption]}
+            style={styles.option}
             onPress={() => route && navigation.navigate(route)} 
           >
             <MaterialIcons 
               name={icon} 
               size={24} 
-              color={isDarkMode ? "#00FF99" : "#2e7d32"} 
+              color="#00FF99"
             />
-            <Text style={[styles.optionText, isDarkMode ? styles.darkText : styles.lightOptionText]}>
-              {title}
-            </Text>
+            <Text style={styles.optionText}>{title}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      
     </View>
   );
 };

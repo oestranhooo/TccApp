@@ -5,61 +5,38 @@ import styles from "../styles/ReportErrorScreen";
 import { useNavigation } from "@react-navigation/native";
 
 const ReportErrorScreen = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation();
+
   const handleSendReport = () => {
     alert("Relatório enviado! Obrigado pelo feedback.");
     setErrorMessage("");
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        isDarkMode ? styles.darkContainer : styles.lightContainer,
-      ]}
-    >
+    <View style={styles.container}>
       {/* Cabeçalho */}
       <View style={styles.header}>
-        <Text
-          style={[
-            styles.title,
-            isDarkMode ? styles.darkText : styles.lightText,
-          ]}
-        >
-          Reportar Erro
-        </Text>
-
+        <Text style={styles.title}>Reportar Erro</Text>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back" size={28} color="#00FF99" />
         </TouchableOpacity>
       </View>
 
       {/* Campo de Texto para Relatório */}
-      <Text
-        style={[styles.label, isDarkMode ? styles.darkText : styles.lightText]}
-      >
-        Descreva o problema:
-      </Text>
+      <Text style={styles.label}>Descreva o problema:</Text>
       <TextInput
-        style={[
-          styles.textArea,
-          isDarkMode ? styles.darkInput : styles.lightInput,
-        ]}
+        style={styles.textArea}
         value={errorMessage}
         onChangeText={setErrorMessage}
         placeholder="Escreva aqui o erro que encontrou..."
-        placeholderTextColor={isDarkMode ? "#BBB" : "#777"}
+        placeholderTextColor="#BBB"
         multiline
       />
 
       {/* Botão de Enviar */}
       <TouchableOpacity
-        style={[
-          styles.button,
-          isDarkMode ? styles.darkButton : styles.lightButton,
-        ]}
+        style={styles.button}
         onPress={handleSendReport}
         disabled={!errorMessage.trim()}
       >

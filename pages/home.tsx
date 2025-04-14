@@ -49,7 +49,7 @@ export default function Home() {
         style={homeStyles.chart}
       />
 
-      <Text style={homeStyles.chartTitle}>Amônia (µmol/L)</Text>
+      <Text style={homeStyles.chartTitle}>Amônia (ppm)</Text>
       <LineChart
         data={ammoniaData}
         width={screenWidth - 32}

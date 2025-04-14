@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native"; // Importação do Navigation
+import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/NotificationCenter";
 
 const NotificationsScreen = () => {
-  const navigation = useNavigation(); // Hook para navegação
+  const navigation = useNavigation();
   const [notifications, setNotifications] = useState([
     { id: 1, message: "🔴 Temperatura elevada no aviário! Verifique o sistema de climatização." },
     { id: 2, message: "🟠 Níveis altos de amônia detectados. Aumente a ventilação." },
@@ -39,7 +39,7 @@ const NotificationsScreen = () => {
             <View key={notification.id} style={styles.notificationItem}>
               <Text style={styles.notificationText}>{notification.message}</Text>
               <TouchableOpacity style={styles.button} onPress={() => markAsRead(notification.id)}>
-                <MaterialIcons name="done" size={20} color="#2e7d32" />
+                <MaterialIcons name="done" size={20} color="#00FF99" />
                 <Text style={styles.buttonText}>Marcar como lida</Text>
               </TouchableOpacity>
             </View>
