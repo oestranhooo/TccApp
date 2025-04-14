@@ -18,7 +18,7 @@ const SupportScreen = () => {
   };
 
   const handleWhatsAppPress = () => {
-    const phoneNumber = "+5545999999999"; // Substitua pelo número real
+    const phoneNumber = "+5545999999999"; 
     const message = "Olá, preciso de suporte!";
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
