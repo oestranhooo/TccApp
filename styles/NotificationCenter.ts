@@ -47,7 +47,7 @@ export default StyleSheet.create({
     backgroundColor: "#00FF99", // Botão verde neon
   },
   buttonText: {
-    color: "#2e7d32",
+    color: "#2e7d32", // Texto verde escuro
     fontSize: 16,
     fontWeight: "bold",
     marginLeft: 5,
@@ -57,6 +57,6 @@ export default StyleSheet.create({
     textAlign: "center",
     marginTop: 50,
     opacity: 0.7,
-    color: "#FFF",
+    color: "#FFF", // Texto branco para a mensagem "Todas lidas"
   },
 });

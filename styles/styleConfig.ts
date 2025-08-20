@@ -6,7 +6,7 @@ export const darkConfigStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#0D1B2A", // Fundo escuro
     padding: 20,
-    paddingTop: 50, // Ajuste para evitar a câmera
+    paddingTop: 50,
   },
   header: {
     flexDirection: "row",
@@ -17,7 +17,7 @@ export const darkConfigStyles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#00FF99", // Verde para título
+    color: "#00FF99", // Verde neon
   },
   menuButton: {
     padding: 10,
@@ -25,7 +25,7 @@ export const darkConfigStyles = StyleSheet.create({
   option: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#0D1B2A", // Fundo do botão no tema escuro
+    backgroundColor: "#0D1B2A",
     padding: 15,
     borderRadius: 10,
     marginVertical: 5,
@@ -35,7 +35,7 @@ export const darkConfigStyles = StyleSheet.create({
   optionText: {
     marginLeft: 10,
     fontSize: 16,
-    color: "#00FF99", // Texto verde
+    color: "#00FF99",
   },
   menuContainer: {
     marginTop: 20,
@@ -46,9 +46,9 @@ export const darkConfigStyles = StyleSheet.create({
 export const lightConfigStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF", // Fundo branco
+    backgroundColor: "#FFFFFF", // Fundo claro
     padding: 20,
-    paddingTop: 50, // Ajuste para evitar a câmera
+    paddingTop: 50,
   },
   header: {
     flexDirection: "row",
@@ -59,7 +59,7 @@ export const lightConfigStyles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#00AA66", // Verde mais escuro para título
+    color: "#00FF99", // Verde escuro
   },
   menuButton: {
     padding: 10,
@@ -67,25 +67,25 @@ export const lightConfigStyles = StyleSheet.create({
   option: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFFFFF", // Fundo do botão no tema claro
+    backgroundColor: "#FFFFFF",
     padding: 15,
     borderRadius: 10,
     marginVertical: 5,
     borderWidth: 1,
-    borderColor: "#00AA66", // Verde mais escuro
+    borderColor: "#00FF99",
   },
   optionText: {
     marginLeft: 10,
     fontSize: 16,
-    color: "#00AA66", // Texto verde mais escuro
+    color: "#00FF99",
   },
   menuContainer: {
     marginTop: 20,
   },
 });
 
-// Exportar ambos os estilos
+// Exportar os estilos unificados
 export default {
   dark: darkConfigStyles,
-  light: lightConfigStyles
+  light: lightConfigStyles,
 };

@@ -9,14 +9,16 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+
 import { darkStyles, lightStyles } from "../../styles/PasswordRecovery/stylesPasswordRecovery";
-import { useTheme } from "../../context/ThemeContext"; // Reimportar o hook useTheme
-import { Ionicons } from "@expo/vector-icons"; // Import icons
+import { useTheme } from "../../context/ThemeContext";
 
 const CreateNewPasswordScreen = () => {
   const navigation = useNavigation<any>();
-  const { theme } = useTheme(); // Usar o hook useTheme para acessar o tema atual
-  const styles = theme === "light" ? lightStyles : darkStyles; // Selecionar os estilos com base no tema
+  const { theme } = useTheme();
+  const styles = theme === "light" ? lightStyles : darkStyles;
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -28,79 +30,114 @@ const CreateNewPasswordScreen = () => {
       setError("As senhas estão diferentes, verifique!");
       return;
     }
-    if (newPassword.length < 6) { // Example validation
+    if (newPassword.length < 6) {
       setError("A senha deve ter pelo menos 6 caracteres.");
       return;
     }
+
     setError("");
     console.log("Resetting password...");
-    // TODO: Implement password reset logic with API call
-    // Navigate back to login or a success screen on completion
-    navigation.navigate("Login"); // Navigate to Login after successful reset
+
+    // TODO: Implementar integração com Supabase / backend
+    navigation.navigate("Login");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{ alignItems: "center", flexGrow: 1, justifyContent: 'center' }}>
+      <ScrollView
+        contentContainerStyle={{
+          alignItems: "center",
+          flexGrow: 1,
+          justifyContent: "center",
+        }}
+        keyboardShouldPersistTaps="handled"
+      >
         <Image
-          source={require("../../assets/Logo.png")} 
+          source={require("../../assets/Logo.png")}
           style={styles.logo}
           resizeMode="contain"
         />
-        <Text style={styles.title}>Criar uma nova senha?</Text>
 
+        <Text style={styles.title}>Criar uma nova senha</Text>
+
+        {/* Campo Nova Senha */}
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Nova senha</Text>
-          <View style={[styles.textInput, { flexDirection: 'row', alignItems: 'center' }]}>
+          <View
+            style={[
+              styles.textInput,
+              { flexDirection: "row", alignItems: "center" },
+            ]}
+          >
             <TextInput
-              style={{ flex: 1, color: styles.textInput.color }} // Ensure TextInput text color matches theme
+              style={{ flex: 1, color: styles.textInput.color }}
               placeholder="Digite a nova senha"
               placeholderTextColor={theme === "light" ? "#AAAAAA" : "#7a7a7a"}
               value={newPassword}
-              onChangeText={setNewPassword}
+              onChangeText={(text) => {
+                setNewPassword(text);
+                if (error) setError("");
+              }}
               secureTextEntry={!showNewPassword}
               autoCapitalize="none"
             />
-            <TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
-              <Ionicons 
-                name={showNewPassword ? "eye-off" : "eye"} 
-                size={24} 
-                color={styles.inputLabel.color} // Use theme-based color
+            <TouchableOpacity
+              onPress={() => setShowNewPassword(!showNewPassword)}
+            >
+              <Ionicons
+                name={showNewPassword ? "eye-off" : "eye"}
+                size={24}
+                color={styles.inputLabel.color}
               />
             </TouchableOpacity>
           </View>
         </View>
 
+        {/* Campo Confirmar Senha */}
         <View style={styles.inputContainer}>
-          <Text style={[styles.inputLabel, error ? { color: styles.errorText.color } : {}]}>Confirmar Senha</Text>
-          <View style={[
-            styles.textInput, 
-            { flexDirection: 'row', alignItems: 'center' },
-            error ? { borderColor: styles.errorText.color } : {}
-          ]}>
+          <Text
+            style={[
+              styles.inputLabel,
+              error ? { color: styles.errorText.color } : {},
+            ]}
+          >
+            Confirmar senha
+          </Text>
+          <View
+            style={[
+              styles.textInput,
+              { flexDirection: "row", alignItems: "center" },
+              error ? { borderColor: styles.errorText.color } : {},
+            ]}
+          >
             <TextInput
-              style={{ flex: 1, color: styles.textInput.color }} // Ensure TextInput text color matches theme
+              style={{ flex: 1, color: styles.textInput.color }}
               placeholder="Confirme a nova senha"
               placeholderTextColor={theme === "light" ? "#AAAAAA" : "#7a7a7a"}
               value={confirmPassword}
               onChangeText={(text) => {
                 setConfirmPassword(text);
-                if (error) setError(""); // Clear error on input change
+                if (error) setError("");
               }}
               secureTextEntry={!showConfirmPassword}
               autoCapitalize="none"
             />
-            <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-              <Ionicons 
-                name={showConfirmPassword ? "eye-off" : "eye"} 
-                size={24} 
-                color={error ? styles.errorText.color : styles.inputLabel.color} // Use error color if applicable
+            <TouchableOpacity
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              <Ionicons
+                name={showConfirmPassword ? "eye-off" : "eye"}
+                size={24}
+                color={
+                  error ? styles.errorText.color : styles.inputLabel.color
+                }
               />
             </TouchableOpacity>
           </View>
           {error ? <Text style={styles.errorText}>{error}</Text> : null}
         </View>
 
+        {/* Botão */}
         <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
           <Text style={styles.buttonText}>Redefinir Senha</Text>
         </TouchableOpacity>

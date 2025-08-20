@@ -8,37 +8,41 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../../context/ThemeContext";
 import { darkStyles, lightStyles } from "../../styles/PasswordRecovery/stylesPasswordRecovery";
-import { useTheme } from "../../context/ThemeContext"; // Reimportar o hook useTheme
+import { supabase } from "../../supabaseClient"; // Certifique-se de ter o cliente Supabase configurado
 
 const ForgotPasswordScreen = () => {
-  const navigation = useNavigation<any>();
-  const { theme } = useTheme(); // Usar o hook useTheme para acessar o tema atual
-  const styles = theme === "light" ? lightStyles : darkStyles; // Selecionar os estilos com base no tema
+  const { theme } = useTheme();
+  const styles = theme === "light" ? lightStyles : darkStyles;
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSend = () => {
-    // TODO: Implement email sending logic
-    console.log("Sending password reset email to:", email);
-    // Navigate based on your flow, maybe to a confirmation or code screen
-    navigation.navigate("VerificationCode"); 
-  };
-
-  const handleCancel = () => {
-    navigation.goBack();
+  const handleSendMagicLink = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: 'greenpulse://login', // Seu scheme do app
+        },
+      });
+      if (error) throw error;
+      setMessage("Verifique seu email! Link mágico enviado.");
+    } catch (error: any) {
+      setMessage(`Erro: ${error.message}`);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ alignItems: "center", flexGrow: 1, justifyContent: 'center' }}>
         <Image
-          source={require("../../assets/Logo.png")} 
+          source={require("../../assets/Logo.png")}
           style={styles.logo}
           resizeMode="contain"
         />
         <Text style={styles.title}>Esqueceu a senha?</Text>
-        <Text style={styles.subtitle}>Redefina a senha em duas etapas</Text>
+        <Text style={styles.subtitle}>Redefina sua senha em apenas um clique</Text>
 
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Qual seu e-mail de cadastro?</Text>
@@ -53,13 +57,11 @@ const ForgotPasswordScreen = () => {
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleSend}>
-          <Text style={styles.buttonText}>Enviar</Text>
+        <TouchableOpacity style={styles.button} onPress={handleSendMagicLink}>
+          <Text style={styles.buttonText}>Enviar Link Mágico</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.secondaryButton} onPress={handleCancel}>
-          <Text style={styles.secondaryButtonText}>Cancelar</Text>
-        </TouchableOpacity>
+        {message ? <Text style={styles.messageText}>{message}</Text> : null}
       </ScrollView>
     </SafeAreaView>
   );

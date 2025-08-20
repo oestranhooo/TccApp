@@ -1,12 +1,13 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import stylesConfig from "../styles/styleConfig"; // Importar os estilos estruturados
+import stylesConfig from "../styles/styleConfig"; // Estilos estruturados
+import { supabase } from "../supabaseClient"; // Ajuste o caminho se necessário
 
-// Definição das rotas disponíveis
+// Rotas do stack de configurações
 type SettingsStackParamList = {
   SettingsHome: undefined;
   PersonalData: undefined;
@@ -14,36 +15,56 @@ type SettingsStackParamList = {
   NotificationCenter: undefined;
   PrivacyPolicy: undefined;
   Support: undefined;
-  Logout: undefined;
+  Logout: undefined; // Opcional, só para referência
 };
 
-const menuOptions: { title: string; icon: any; route?: keyof SettingsStackParamList }[] = [
+// Menu de opções
+const menuOptions: { title: string; icon: any; route?: keyof SettingsStackParamList | "Login" }[] = [
   { title: "Dados Pessoais", icon: "person", route: "PersonalData" },
   { title: "Reportar Erro", icon: "bug-report", route: "ReportError" },
   { title: "Central de Notificação", icon: "notifications", route: "NotificationCenter" },
   { title: "Política de Privacidade", icon: "policy", route: "PrivacyPolicy" },
   { title: "Suporte", icon: "support-agent", route: "Support" },
-  { title: "Sair", icon: "logout", route: "Logout" },
+  { title: "Sair", icon: "logout", route: "Login" },
 ];
 
 const SettingsScreen = () => {
   const navigation = useNavigation<StackNavigationProp<SettingsStackParamList, "SettingsHome">>();
-  const { theme, toggleTheme } = useTheme(); // Usar o hook useTheme
-  const styles = theme === "light" ? stylesConfig.light : stylesConfig.dark; // Selecionar estilos com base no tema
-  const iconColor = theme === "light" ? stylesConfig.light.title.color : stylesConfig.dark.title.color; // Cor dos ícones baseada no tema
+  const { theme, toggleTheme } = useTheme();
+  const styles = theme === "light" ? stylesConfig.light : stylesConfig.dark;
+  const iconColor = theme === "light" ? stylesConfig.light.title.color : stylesConfig.dark.title.color;
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+
+      console.log("Usuário deslogado com sucesso");
+
+      // Resetar navegação e voltar para Login
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "Login" as never }], // 'as never' contorna a tipagem restrita
+        })
+      );
+    } catch (err: any) {
+      console.log("Erro ao deslogar:", err.message);
+    }
+  };
 
   return (
     <View style={styles.container}>
       {/* Cabeçalho */}
       <View style={styles.header}>
         <Text style={styles.title}>Configurações</Text>
-        
-        {/* Botão para alternar entre modo claro e escuro */}
-        <TouchableOpacity onPress={toggleTheme} style={themeButtonStyles.button(theme)}> {/* Passar tema para estilo do botão */}
-          <MaterialIcons 
-            name={theme === "dark" ? "wb-sunny" : "nightlight-round"} 
-            size={24} 
-            color={iconColor} // Usar cor do ícone baseada no tema
+
+        {/* Alternar tema */}
+        <TouchableOpacity onPress={toggleTheme} style={themeButtonStyles.button(theme)}>
+          <MaterialIcons
+            name={theme === "dark" ? "wb-sunny" : "nightlight-round"}
+            size={24}
+            color={iconColor}
           />
         </TouchableOpacity>
       </View>
@@ -51,16 +72,18 @@ const SettingsScreen = () => {
       {/* Lista de opções */}
       <View style={styles.menuContainer}>
         {menuOptions.map(({ title, icon, route }, index) => (
-          <TouchableOpacity 
-            key={index} 
+          <TouchableOpacity
+            key={index}
             style={styles.option}
-            onPress={() => route && navigation.navigate(route)} 
+            onPress={() => {
+              if (title === "Sair") {
+                handleLogout();
+              } else if (route) {
+                navigation.navigate(route as keyof SettingsStackParamList);
+              }
+            }}
           >
-            <MaterialIcons 
-              name={icon} 
-              size={24} 
-              color={iconColor} // Usar cor do ícone baseada no tema
-            />
+            <MaterialIcons name={icon} size={24} color={iconColor} />
             <Text style={styles.optionText}>{title}</Text>
           </TouchableOpacity>
         ))}
@@ -69,15 +92,14 @@ const SettingsScreen = () => {
   );
 };
 
-// Estilos para o botão de alternar tema (agora uma função que recebe o tema)
+// Botão de alternar tema
 const themeButtonStyles = {
   button: (theme: 'light' | 'dark') => ({
     padding: 8,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: theme === 'light' ? stylesConfig.light.title.color : stylesConfig.dark.title.color, // Cor da borda baseada no tema
+    borderColor: theme === 'light' ? stylesConfig.light.title.color : stylesConfig.dark.title.color,
   })
 };
 
 export default SettingsScreen;
-

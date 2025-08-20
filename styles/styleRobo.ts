@@ -26,7 +26,7 @@ export const styleRobo = StyleSheet.create({
         fontWeight: "bold",
     },
     reviewButton: {
-        backgroundColor: "#2D3B44",
+        backgroundColor: "#00FF99",
         borderRadius: 12,
         padding: 16,
         marginTop: 12,
