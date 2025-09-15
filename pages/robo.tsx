@@ -7,9 +7,9 @@ export default function Robo() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const textColor = { color: isDark ? "#FFFFFF" : "#00FF99" };
+  const textColor = { color: isDark ? "#00FF99" : "#00FF99" };
   const backgroundColor = { backgroundColor: isDark ? "#0D1B2A" : "#F5F5F5" };
-  const cardBackground = { backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF" };
+  const cardBackground = { backgroundColor: isDark ? "#1B263B" : "#FFFFFF" };
 
   return (
     <ScrollView style={[styleRobo.container, backgroundColor]}>

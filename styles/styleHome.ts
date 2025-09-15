@@ -20,5 +20,6 @@ export const homeStyles = StyleSheet.create({
   chart: {
     borderRadius: 16,
     marginBottom: 20,
-  },
+  }
+,
 });

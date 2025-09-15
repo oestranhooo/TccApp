@@ -29,7 +29,7 @@
           "action": "VIEW",
           "data": [
             {
-              "scheme": "apptest",
+              "scheme": "GreenPulse",
               "host": "auth"
             }
           ],

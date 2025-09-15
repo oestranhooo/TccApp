@@ -3,9 +3,20 @@ import { View, Text, TouchableOpacity, Linking } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import styles from "../styles/SupportScreen";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../context/ThemeContext";
 
 const SupportScreen = () => {
   const navigation = useNavigation();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  // Definição de cores dinâmicas
+  const backgroundColor = isDark ? "#0D1B2A" : "#FFFFFF";
+  const headerTextColor = isDark ? "#00FF99" : "#00FF99";
+  const labelColor = isDark ? "#EEE" : "#333";
+  const buttonBgWhatsApp = isDark ? "#25D366" : "#128C7E"; // verde WhatsApp
+  const buttonBgEmail = isDark ? "#00FF99" : "#ff0202ff";
+  const buttonTextColor = "#FFF";
 
   const handleEmailPress = () => {
     const email = "suporte@email.com";
@@ -23,25 +34,31 @@ const SupportScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       {/* Cabeçalho */}
       <View style={styles.header}>
-        <Text style={styles.title}>Suporte</Text>
+        <Text style={[styles.title, { color: headerTextColor }]}>Suporte</Text>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={28} color="#00FF99" />
+          <MaterialIcons name="arrow-back" size={28} color={headerTextColor} />
         </TouchableOpacity>
       </View>
 
       {/* Informações de Suporte */}
       <View style={styles.supportContainer}>
-        <Text style={styles.label}>Nosso WhatsApp</Text>
-        <TouchableOpacity style={styles.whatsappButton} onPress={handleWhatsAppPress}>
-          <Text style={styles.buttonText}>Abrir WhatsApp</Text>
+        <Text style={[styles.label, { color: labelColor }]}>Nosso WhatsApp</Text>
+        <TouchableOpacity
+          style={[styles.whatsappButton, { backgroundColor: buttonBgWhatsApp }]}
+          onPress={handleWhatsAppPress}
+        >
+          <Text style={[styles.buttonText, { color: buttonTextColor }]}>Abrir WhatsApp</Text>
         </TouchableOpacity>
 
-        <Text style={styles.label}>Nosso Email</Text>
-        <TouchableOpacity style={styles.emailButton} onPress={handleEmailPress}>
-          <Text style={styles.buttonText}>Enviar Email</Text>
+        <Text style={[styles.label, { color: labelColor }]}>Nosso Email</Text>
+        <TouchableOpacity
+          style={[styles.emailButton, { backgroundColor: buttonBgEmail }]}
+          onPress={handleEmailPress}
+        >
+          <Text style={[styles.buttonText, { color: buttonTextColor }]}>Enviar Email</Text>
         </TouchableOpacity>
       </View>
     </View>
